@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import AddEventButton from "./AddEventButton"
 import React, { useContext } from "react";
 
@@ -16,5 +16,16 @@ describe("AddEventButton component", ()=>{
 
     const addNewEventButton = screen.getByRole('button', {name: 'Add New Event'});
     expect(addNewEventButton).toBeInTheDocument();
+  })
+
+  test('trigger showAddEventRow when add new event button is clicked', ()=>{
+    const showAddEventRow = jest.fn();
+    useContext.mockImplementation(()=>({showAddEventRow}));
+    render(<AddEventButton />);
+
+    const addNewEventButton = screen.getByRole('button', {name: 'Add New Event'});
+    fireEvent.click(addNewEventButton);
+
+    expect(showAddEventRow).toHaveBeenCalled();
   })
 })

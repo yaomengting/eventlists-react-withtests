@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.addEvent{
+  display: flex;
+  justify-content: center;
+}
+#addEventButton {
+  background-color: #008cba;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+}
+
+table{
+  width: 100%;
+  border: 3px solid #e6e2d3;
+  border-radius: 10px;
+  padding: 10px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  
+}
+
+/* .event{
+ 
+} */
+.addEvent{
+  margin-top: 20px;
+}
+tr td, tr th {
+  padding: 10px 0;
+}
+
+td {
+  text-align: center; 
+  border: 3px;
+  padding: 5px;
+  background-color:#e6e2d3;
+}
+
+.table-head th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+svg{
+  width: 24px;
+  height: 24px;
+}
+
+.save-button,
+.edit-button,
+.cancel-button,
+.delete-button{
+  border-radius: 8px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.save-button svg,
+.edit-button svg,
+.cancel-button svg,
+.delete-button svg{
+  fill: white;
+}
+
+.save-button,
+.edit-button{
+  background-color: #008cba;
+  border: none;
+}
+
+.cancel-button,
+.delete-button{
+  background-color:  #c94c4c;
+  border: none;
+}

@@ -1,30 +1,41 @@
-// import { render, screen } from "@testing-library/react";
-// import EventsContextProvider from "./EventsContextProvider";
+import { render } from "@testing-library/react";
+import EventsContextProvider from "./EventsContextProvider";
+import { useContext } from "react";
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: jest.fn()
+}));
+describe("EventsContextProvider component", () => {
+  let mockFetch;
+  const addNewEvent = jest.fn((newEvent) => {
+    fetch('http://localhost:3000/events', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newEvent),
+    });
+  });
+  beforeEach(() => {
+    mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue({ json: () => Promise.resolve() });;
+    useContext.mockImplementation(() => ({addNewEvent}));
+  })
 
-// describe("EventsContextProvider component", () => {
-//   global.fetch = jest.fn().mockResolvedValueOnce({
-//     json: () => Promise.resolve([{
-//       id: '034',
-//       eventName: 'mock event 1',
-//       startDate: '04-08-2024',
-//       endDate: '04-18-2024'
-//     },
-//     {
-//       id: '094',
-//       eventName: 'mock event 2',
-//       startDate: '04-08-2024',
-//       endDate: '04-18-2024'
-//     }])
-//   })
+  afterEach(() => {
+    mockFetch.mockRestore();
+  })
+ 
+  test('add new event', () => {
+    const newEvent = {
+      id: '123',
+      eventName: 'new event',
+      startDate: '04-08-2024',
+      endDate: '04-18-2024'
+    }
+    render(<EventsContextProvider />);
+     addNewEvent(newEvent)
 
-//   test('renders events if get request succeeds', async () => {
-    
-//     render(<EventsContextProvider />)
-//     const event1 = await screen.findByText('mock event 1');
-//     const event2 = await screen.findByText('mock event 2');
-
-//     expect(event1).toBeInTheDocument();
-//     expect(event2).toBeInTheDocument();
-
-//   })
-// })
+    expect(mockFetch).toHaveBeenCalledWith('http://localhost:3000/events');
+  })
+ 
+})

@@ -28,7 +28,7 @@ export default function EventsContextProvider({ children }) {
   const [state, dispatch] = useReducer(eventsReducer, initialState);
 
   useEffect(() => {
-    return fetch('http://localhost:3000/events')
+    fetch('http://localhost:3000/events')
       .then((res) => res.json())
       .then(data => dispatch(
         {

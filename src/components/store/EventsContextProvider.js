@@ -7,28 +7,28 @@ const initialState = {
   events: [],
 }
 
-function eventsReducer(state, action){
-  switch(action.type){
+function eventsReducer(state, action) {
+  switch (action.type) {
     case 'SET_EVENTS':
-      return { ...state, events: action.payload};
+      return { ...state, events: action.payload };
     case 'ADD_EVENT':
-      return { ...state, events: [...state.events, action.payload], isAddEventVisible: false};
+      return { ...state, events: [...state.events, action.payload], isAddEventVisible: false };
     case 'UPDATE_EVENT':
-      return { ...state, events: state.events.map(event => event.id === action.payload.id? action.payload: event) };
+      return { ...state, events: state.events.map(event => event.id === action.payload.id ? action.payload : event) };
     case 'DELETE_EVENT':
-      return { ...state, events: state.events.filter(event => event.id !== action.payload.id)};
+      return { ...state, events: state.events.filter(event => event.id !== action.payload.id) };
     case 'HIDE_ADD_EVENT':
-      return {...state, isAddEventVisible: false};
+      return { ...state, isAddEventVisible: false };
     case 'SHOW_ADD_EVENT':
-      return  {...state, isAddEventVisible: true};
+      return { ...state, isAddEventVisible: true };
   }
 }
 
-export default function EventsContextProvider ({ children }) {
- const [state, dispatch] = useReducer(eventsReducer, initialState);
+export default function EventsContextProvider({ children }) {
+  const [state, dispatch] = useReducer(eventsReducer, initialState);
 
   useEffect(() => {
-    fetch('http://localhost:3000/events')
+    return fetch('http://localhost:3000/events')
       .then((res) => res.json())
       .then(data => dispatch(
         {
@@ -46,36 +46,36 @@ export default function EventsContextProvider ({ children }) {
       },
       body: JSON.stringify(newEvent),
     })
-    .then((res) => res.json())
-    .then(newEvent => dispatch({
-      type: 'ADD_EVENT',
-      payload: newEvent
-    }));
+      .then((res) => res.json())
+      .then(newEvent => dispatch({
+        type: 'ADD_EVENT',
+        payload: newEvent
+      }));
   }
 
   const updateEvent = (updatedEvent) => {
-    fetch(`http://localhost:3000/events/${updatedEvent.id}`,{
+    fetch(`http://localhost:3000/events/${updatedEvent.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedEvent),
     })
-    .then((res) => res.json())
-    .then(updatedEvent => dispatch({
-      type: 'UPDATE_EVENT',
-      payload: updatedEvent
-    }));
+      .then((res) => res.json())
+      .then(updatedEvent => dispatch({
+        type: 'UPDATE_EVENT',
+        payload: updatedEvent
+      }));
   }
 
   const deleteEvent = (deletedEvent) => {
-    fetch(`http://localhost:3000/events/${deletedEvent.id}`,{
+    fetch(`http://localhost:3000/events/${deletedEvent.id}`, {
       method: 'DELETE',
     })
-    .then(() => dispatch({
-      type: 'DELETE_EVENT',
-      payload: deletedEvent
-    }));
+      .then(() => dispatch({
+        type: 'DELETE_EVENT',
+        payload: deletedEvent
+      }));
   }
 
   const hideAddEventRow = () => {

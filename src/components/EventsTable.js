@@ -41,12 +41,14 @@ function EventsTable() {
             <td>
               <input type="text"
                 placeholder="Event Name"
+                aria-label="Event Name"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)} />
             </td>
             <td>
               <input
               type="date"
+              aria-label="Start Date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
@@ -54,6 +56,7 @@ function EventsTable() {
             <td> 
               <input
               type="date"
+              aria-label="End Date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             />
